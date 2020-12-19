@@ -1,0 +1,35 @@
+{
+  "name": "cypress-markdown-preprocessor",
+  "version": "1.0.0",
+  "description": "Use Markdown files as Cypress specs",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahmutov/cypress-markdown-preprocessor.git"
+  },
+  "keywords": [
+    "cypress",
+    "cypress-preprocessor",
+    "markdown"
+  ],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahmutov/cypress-markdown-preprocessor/issues"
+  },
+  "homepage": "https://github.com/bahmutov/cypress-markdown-preprocessor#readme",
+  "dependencies": {
+    "@cypress/browserify-preprocessor": "3.0.1",
+    "@textlint/markdown-to-ast": "6.2.5",
+    "common-tags": "1.8.0",
+    "debug": "4.3.1",
+    "temp-write": "4.0.0"
+  },
+  "devDependencies": {
+    "cypress": "6.1.0",
+    "prettier": "2.2.1"
+  }
+}
