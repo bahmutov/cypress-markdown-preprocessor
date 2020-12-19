@@ -3,10 +3,11 @@
   "version": "0.0.0-development",
   "description": "Use Markdown files as Cypress specs",
   "main": "src/index.js",
+  "files": ["src"],
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test": "cypress-expect run --passing 1",
+    "test": "cypress-expect run --min-passing 2",
     "semantic-release": "semantic-release"
   },
   "repository": {

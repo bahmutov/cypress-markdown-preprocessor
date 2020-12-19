@@ -2,7 +2,56 @@
 [![ci status][ci image]][ci url] [![badges status][badges image]][badges url] [![renovate-app badge][renovate-badge]][renovate-app] ![cypress version](https://img.shields.io/badge/cypress-6.1.0-brightgreen) ![@cypress/fiddle version](https://img.shields.io/badge/@cypress/fiddle-1.19.0-brightgreen)
 > Use Markdown files as Cypress specs
 
-### Small print
+## Install
+
+Assuming Cypress is a dev dependency
+
+```
+npm i -D cypress-markdown-preprocessor
+# or
+yarn add -D cypress-markdown-preprocessor
+```
+
+Add to your Cypress plugins file
+
+```js
+// cypress/plugins/index.js
+const mdPreprocessor = require('cypress-markdown-preprocessor')
+module.exports = (on, config) => {
+  on('file:preprocessor', mdPreprocessor)
+}
+```
+
+Set the [`testFiles`](https://on.cypress.io/configuration) to use Markdown files as specs
+
+```json
+{
+  "testFiles": "*.md"
+}
+```
+
+## Use
+
+Write Markdown spec files including "fiddle" comments. Each fiddle comment will be extracted into own test.
+
+    <!-- fiddle Example -->
+    ```html
+    <div id="hello">Hello</div>
+    ```
+
+    ```js
+    cy.contains('#hello', 'Hello')
+    ```
+    <!-- fiddle.end -->
+
+The "html" block is optional.
+
+![Example test](images/example.png)
+
+Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https://github.com/cypress-io/cypress-fiddle) to run them.
+
+
+## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2020
 

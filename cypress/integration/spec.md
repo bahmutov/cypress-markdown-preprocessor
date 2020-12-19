@@ -2,6 +2,16 @@
 
 <!-- fiddle Example -->
 ```html
+<div id="hello">Hello</div>
+```
+
+```js
+cy.contains('#hello', 'Hello')
+```
+<!-- fiddle.end -->
+
+<!-- fiddle Another example -->
+```html
 <div id="parent">
   <div id="first">A new div will appear in 2 seconds</div>
 </div>
