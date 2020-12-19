@@ -1,16 +1,17 @@
 {
   "name": "cypress-markdown-preprocessor",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Use Markdown files as Cypress specs",
   "main": "src/index.js",
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test": "cypress-expect run --passing 1"
+    "test": "cypress-expect run --passing 1",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bahmutov/cypress-markdown-preprocessor.git"
+    "url": "https://github.com/bahmutov/cypress-markdown-preprocessor.git"
   },
   "keywords": [
     "cypress",
@@ -35,6 +36,7 @@
     "@types/node": "14.14.14",
     "cypress": "6.1.0",
     "cypress-expect": "2.2.1",
-    "prettier": "2.2.1"
+    "prettier": "2.2.1",
+    "semantic-release": "^17.3.0"
   }
 }
