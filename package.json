@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "test": "cypress run"
+    "cy:run": "cypress run",
+    "test": "cypress-expect run --passing 1"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/node": "14.14.14",
     "cypress": "6.1.0",
+    "cypress-expect": "2.2.1",
     "prettier": "2.2.1"
   }
 }
