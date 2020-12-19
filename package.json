@@ -2,8 +2,9 @@
   "name": "cypress-markdown-preprocessor",
   "version": "1.0.0",
   "description": "Use Markdown files as Cypress specs",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "cy:open": "cypress open",
     "test": "cypress run"
   },
   "repository": {
