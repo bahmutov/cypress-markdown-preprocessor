@@ -50,6 +50,9 @@ The "html" block is optional.
 
 Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https://github.com/cypress-io/cypress-fiddle) to run them.
 
+## Examples
+
+- [cypress-book-todomvc](https://github.com/bahmutov/cypress-book-todomvc)
 
 ## Small print
 
