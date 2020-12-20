@@ -53,6 +53,7 @@ Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https
 ## Examples
 
 - [cypress-book-todomvc](https://github.com/bahmutov/cypress-book-todomvc)
+- [cypress-examples](https://github.com/bahmutov/cypress-examples)
 
 ## Small print
 
