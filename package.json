@@ -38,6 +38,6 @@
     "cypress": "6.2.1",
     "cypress-expect": "2.2.1",
     "prettier": "2.2.1",
-    "semantic-release": "17.3.3"
+    "semantic-release": "17.3.4"
   }
 }
