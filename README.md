@@ -55,6 +55,10 @@ Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https
 - [cypress-book-todomvc](https://github.com/bahmutov/cypress-book-todomvc)
 - [cypress-examples](https://github.com/bahmutov/cypress-examples)
 
+## Debugging
+
+To see log messages from this module, run with `DEBUG=cypress-markdown-preprocessor` environment variable
+
 ## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2020
