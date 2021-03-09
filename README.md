@@ -57,7 +57,7 @@ Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https
 
 ## Debugging
 
-To see log messages from this module, run with `DEBUG=cypress-markdown-preprocessor` environment variable
+To see log messages from this module, run with `DEBUG=cypress-markdown-preprocessor` environment variable. To see ever more debug messages enable the verbose logging `DEBUG=cypress-markdown-preprocessor,cypress-markdown-preprocessor:verbose`.
 
 ## Small print
 

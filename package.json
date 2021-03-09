@@ -3,7 +3,9 @@
   "version": "0.0.0-development",
   "description": "Use Markdown files as Cypress specs",
   "main": "src/index.js",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
@@ -29,6 +31,7 @@
     "@cypress/browserify-preprocessor": "3.0.1",
     "@cypress/fiddle": "1.19.2",
     "@textlint/markdown-to-ast": "6.2.5",
+    "chokidar": "3.5.1",
     "common-tags": "1.8.0",
     "debug": "4.3.1",
     "temp-write": "4.0.0"

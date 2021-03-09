@@ -22,6 +22,9 @@
       ],
       "excludePackagePatterns": [
         "cypress",
+        "chokidar",
+        "temp-write",
+        "@textlint/markdown-to-ast",
         "@cypress/fiddle",
         "semantic-release"
       ],
