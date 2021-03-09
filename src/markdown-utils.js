@@ -1,6 +1,7 @@
 // @ts-check
 const { parse } = require('@textlint/markdown-to-ast')
 const debug = require('debug')('cypress-markdown-preprocessor')
+const verbose = require('debug')('cypress-markdown-preprocessor:verbose')
 
 /**
  * Finds optional fiddle name from the comment line
@@ -112,7 +113,7 @@ function extractFiddles(md) {
   } while (true)
 
   debug('found %d fiddles', fiddles.length)
-  debug(fiddles)
+  verbose(fiddles)
   // list of fiddles converted into JavaScript
   const testFiddles = []
 
@@ -154,7 +155,7 @@ function extractFiddles(md) {
         skip: fiddle.skip,
         export: fiddle.export,
       })
-      if (debug.enabled) {
+      if (verbose.enabled) {
         debug('test fiddle formed from "%s"', fiddle.name)
         console.error(testFiddle)
       }
@@ -165,7 +166,7 @@ function extractFiddles(md) {
 
   // console.log(testFiddles)
   debug('Found fiddles: %d', testFiddles.length)
-  if (debug.enabled) {
+  if (verbose.enabled) {
     console.error(testFiddles)
   }
 
@@ -194,8 +195,8 @@ function extractFiddles(md) {
       merged.push(t)
     }
   })
-  if (debug.enabled) {
-    debug('merged fiddles')
+  if (verbose.enabled) {
+    verbose('merged fiddles')
     console.error(merged)
   }
 

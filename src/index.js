@@ -5,12 +5,17 @@ const { source } = require('common-tags')
 const tempWrite = require('temp-write')
 const cyBrowserify = require('@cypress/browserify-preprocessor')()
 const debug = require('debug')('cypress-markdown-preprocessor')
+const verbose = require('debug')('cypress-markdown-preprocessor:verbose')
 const mdUtils = require('./markdown-utils')
 
 // when a temporary file is written, it is placed outside the current folder
 // thus finding the "@cypress/fiddle" module using the regular Node module resolution
 // is impossible. Just resolve the path once and require it directly later.
 const fiddleModulePath = require.resolve('@cypress/fiddle')
+
+// bundled[filename] => promise
+const bundled = {}
+
 /**
   Parses Markdown file looking for special fiddle comments. If found,
   creates separate tests from them. If processing ".js" or ".coffee" files just
@@ -31,11 +36,18 @@ const mdPreprocessor = (file) => {
   }
 
   debug({ filePath, outputPath, shouldWatch })
+
+  if (bundled[filePath]) {
+    debug('already have bundle promise for file %s', filePath)
+    return bundled[filePath]
+  }
+
   const md = fs.readFileSync(filePath, 'utf8')
 
   const createTests = mdUtils.extractFiddles(md)
   const createTestsText = JSON.stringify(createTests, null, 2)
-  if (debug.enabled) {
+
+  if (verbose.enabled) {
     console.error(createTestsText)
   }
 
@@ -51,13 +63,15 @@ const mdPreprocessor = (file) => {
   )
   debug('wrote temp file', writtenTempFilename)
 
-  return cyBrowserify({
+  bundled[filePath] = cyBrowserify({
     filePath: writtenTempFilename,
     outputPath,
     // since the file is generated once, no need to watch it
     shouldWatch: false,
     on: file.on,
   })
+
+  return bundled[filePath]
 }
 
 module.exports = mdPreprocessor

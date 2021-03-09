@@ -3,7 +3,9 @@
   "version": "0.0.0-development",
   "description": "Use Markdown files as Cypress specs",
   "main": "src/index.js",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
