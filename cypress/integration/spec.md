@@ -1,6 +1,6 @@
 # Cypress Markdown spec
 
-<!-- fiddle Example -->
+<!-- fiddle First example -->
 ```html
 <div id="hello">Hello</div>
 ```

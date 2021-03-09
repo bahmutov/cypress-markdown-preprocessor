@@ -74,6 +74,27 @@ const mdPreprocessor = (file) => {
   }
 
   if (shouldWatch) {
+    debug('watching the file %s', filePath)
+
+    bundled[filePath] = bundleMdFile(filePath, outputPath)
+
+    const watcher = chokidar.watch(filePath)
+    watcher.on('change', () => {
+      debug('file %s has changed', filePath)
+      bundled[filePath] = bundleMdFile(filePath, outputPath)
+      bundled[filePath].then(() => {
+        debug('finished bundling, emit rerun')
+        file.emit('rerun')
+      })
+    })
+
+    file.on('close', () => {
+      debug('file %s close, removing bundle promise', filePath)
+      delete bundled[filePath]
+      watcher.close()
+    })
+
+    return bundled[filePath]
   }
 
   bundled[filePath] = bundleMdFile(filePath, outputPath)
