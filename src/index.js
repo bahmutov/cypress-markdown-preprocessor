@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const { source } = require('common-tags')
 const tempWrite = require('temp-write')
+const chokidar = require('chokidar')
 const cyBrowserify = require('@cypress/browserify-preprocessor')()
 const debug = require('debug')('cypress-markdown-preprocessor')
 const verbose = require('debug')('cypress-markdown-preprocessor:verbose')
@@ -15,6 +16,36 @@ const fiddleModulePath = require.resolve('@cypress/fiddle')
 
 // bundled[filename] => promise
 const bundled = {}
+
+const bundleMdFile = (filePath, outputPath) => {
+  const md = fs.readFileSync(filePath, 'utf8')
+
+  const createTests = mdUtils.extractFiddles(md)
+  const createTestsText = JSON.stringify(createTests, null, 2)
+
+  if (verbose.enabled) {
+    console.error(createTestsText)
+  }
+
+  const specSource = source`
+      const { testExamples } = require('${fiddleModulePath}');
+      const fiddles = ${createTestsText};
+      testExamples(fiddles);
+    `
+  const writtenTempFilename = tempWrite.sync(
+    specSource,
+    path.basename(filePath) + '.js',
+  )
+  debug('wrote temp file', writtenTempFilename)
+
+  return cyBrowserify({
+    filePath: writtenTempFilename,
+    outputPath,
+    // since the file is generated once, no need to watch it
+    shouldWatch: false,
+    on: () => {},
+  })
+}
 
 /**
   Parses Markdown file looking for special fiddle comments. If found,
@@ -42,35 +73,10 @@ const mdPreprocessor = (file) => {
     return bundled[filePath]
   }
 
-  const md = fs.readFileSync(filePath, 'utf8')
-
-  const createTests = mdUtils.extractFiddles(md)
-  const createTestsText = JSON.stringify(createTests, null, 2)
-
-  if (verbose.enabled) {
-    console.error(createTestsText)
+  if (shouldWatch) {
   }
 
-  const specSource = source`
-      const { testExamples } = require('${fiddleModulePath}');
-      const fiddles = ${createTestsText};
-      testExamples(fiddles);
-    `
-  // console.log(specSource)
-  const writtenTempFilename = tempWrite.sync(
-    specSource,
-    path.basename(filePath) + '.js',
-  )
-  debug('wrote temp file', writtenTempFilename)
-
-  bundled[filePath] = cyBrowserify({
-    filePath: writtenTempFilename,
-    outputPath,
-    // since the file is generated once, no need to watch it
-    shouldWatch: false,
-    on: file.on,
-  })
-
+  bundled[filePath] = bundleMdFile(filePath, outputPath)
   return bundled[filePath]
 }
 
