@@ -7,6 +7,7 @@
 
 ```js
 cy.contains('#hello', 'Hello')
+cy.get('#hello').should('have.text', 'Hello')
 ```
 <!-- fiddle.end -->
 

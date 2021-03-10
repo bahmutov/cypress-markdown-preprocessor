@@ -76,10 +76,14 @@ const mdPreprocessor = (file) => {
   if (shouldWatch) {
     debug('watching the file %s', filePath)
 
+    // start bundling the first time
     bundled[filePath] = bundleMdFile(filePath, outputPath)
 
+    // and start watching the input Markdown file
     const watcher = chokidar.watch(filePath)
     watcher.on('change', () => {
+      // if the Markdown file changes, we want to rebundle it
+      // and tell the Test Runner to run the tests again
       debug('file %s has changed', filePath)
       bundled[filePath] = bundleMdFile(filePath, outputPath)
       bundled[filePath].then(() => {
@@ -88,6 +92,7 @@ const mdPreprocessor = (file) => {
       })
     })
 
+    // when the test runner closes this spec
     file.on('close', () => {
       debug('file %s close, removing bundle promise', filePath)
       delete bundled[filePath]
@@ -97,6 +102,7 @@ const mdPreprocessor = (file) => {
     return bundled[filePath]
   }
 
+  // non-interactive mode
   bundled[filePath] = bundleMdFile(filePath, outputPath)
   return bundled[filePath]
 }
