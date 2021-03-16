@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "14.14.14",
-    "cypress": "6.6.0",
+    "cypress": "6.7.1",
     "cypress-expect": "2.2.1",
     "prettier": "2.2.1",
     "semantic-release": "17.4.2"
