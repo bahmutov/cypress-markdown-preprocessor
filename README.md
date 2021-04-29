@@ -73,6 +73,8 @@ To create suites of tests, use `/` to separate the suite name from the test name
 
 ## Examples
 
+See the presentation [Using End-to-end Tests as Documentation](https://slides.com/bahmutov/tests-are-docs)
+
 - [cypress-book-todomvc](https://github.com/bahmutov/cypress-book-todomvc)
 - [cypress-examples](https://github.com/bahmutov/cypress-examples)
 
