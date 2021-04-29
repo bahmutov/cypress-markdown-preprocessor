@@ -52,6 +52,25 @@ The "html" block is optional.
 
 Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https://github.com/cypress-io/cypress-fiddle) to run them.
 
+### Suites
+
+To create suites of tests, use `/` to separate the suite name from the test name. Tests with the same suite name are grouped together automatically.
+
+    <!-- fiddle TodoMVC / loads -->
+    ```js
+    cy.visit('/')
+    ```
+    <!-- fiddle-end -->
+
+    then some time later
+
+    <!-- fiddle TodoMVC / adds items -->
+    ```js
+    cy.visit('/')
+    cy.get('.new-todo').type('write tests{enter}')
+    ```
+    <!-- fiddle-end -->
+
 ## Examples
 
 - [cypress-book-todomvc](https://github.com/bahmutov/cypress-book-todomvc)
