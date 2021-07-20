@@ -34,7 +34,7 @@
     "chokidar": "3.5.2",
     "common-tags": "1.8.0",
     "debug": "4.3.1",
-    "temp-write": "4.0.0"
+    "temp-write": "5.0.0"
   },
   "devDependencies": {
     "@types/node": "14.14.14",
