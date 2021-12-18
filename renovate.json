@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:base"],
   "automerge": true,
   "prHourlyLimit": 2,
   "updateNotScheduled": false,
@@ -11,17 +9,14 @@
     "every weekend"
   ],
   "masterIssue": true,
-  "labels": [
-    "type: dependencies",
-    "renovate"
-  ],
+  "labels": ["type: dependencies", "renovate"],
   "packageRules": [
     {
-      "packagePatterns": [
-        "*"
-      ],
+      "packagePatterns": ["*"],
       "excludePackagePatterns": [
         "cypress",
+        "cypress-expect",
+        "cypress-should-really",
         "chokidar",
         "temp-write",
         "@textlint/markdown-to-ast",
