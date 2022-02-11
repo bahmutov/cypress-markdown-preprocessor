@@ -164,7 +164,7 @@ function extractFiddles(md) {
       .filter(shouldIncludeBlock)
 
     if (jsMaybe.length) {
-      console.log(jsMaybe)
+      // console.log(jsMaybe)
       const testCode = jsMaybe.map((b) => b.value).join('\n')
 
       const htmlNode = htmlLiveBlockMaybe || htmlCodeBlockMaybe
