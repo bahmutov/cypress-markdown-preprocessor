@@ -1,5 +1,7 @@
 # cypress-markdown-preprocessor
+
 [![ci status][ci image]][ci url] [![badges status][badges image]][badges url] [![renovate-app badge][renovate-badge]][renovate-app] ![cypress version](https://img.shields.io/badge/cypress-9.4.1-brightgreen) ![@cypress/fiddle version](https://img.shields.io/badge/@cypress/fiddle-1.19.0-brightgreen)
+
 > Use Markdown files as Cypress specs
 
 Read [Write Cypress Markdown Preprocessor](https://glebbahmutov.com/blog/write-cypress-preprocessor/)
@@ -70,6 +72,16 @@ To create suites of tests, use `/` to separate the suite name from the test name
     cy.get('.new-todo').type('write tests{enter}')
     ```
     <!-- fiddle-end -->
+
+### Skipping JavaScript blocks
+
+You can skip JS blocks in the fiddle by using `js skip` syntax
+
+````
+    ```js skip
+    // this JavaScript block won't be included in fiddle
+    ```
+````
 
 ## Examples
 

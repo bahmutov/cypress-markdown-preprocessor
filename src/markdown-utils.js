@@ -1,7 +1,9 @@
 // @ts-check
 const { parse } = require('@textlint/markdown-to-ast')
 const debug = require('debug')('cypress-markdown-preprocessor')
-const verbose = require('debug')('cypress-markdown-preprocessor:verbose')
+const verbose = require('debug')(
+  'cypress-markdown-preprocessor:verbose',
+)
 
 /**
  * Finds optional fiddle name from the comment line
@@ -9,7 +11,9 @@ const verbose = require('debug')('cypress-markdown-preprocessor:verbose')
  */
 const findFiddleName = (commentLine) => {
   debug('finding fiddle name from line: "%s"', commentLine)
-  const matches = /fiddle(?:\.only|\.skip|\.export)? (.+)-->/.exec(commentLine)
+  const matches = /fiddle(?:\.only|\.skip|\.export)? (.+)-->/.exec(
+    commentLine,
+  )
   if (matches && matches.length) {
     const testTitle = matches[1].trim()
     debug('test title: "%s"', testTitle)
@@ -21,7 +25,8 @@ const findFiddleName = (commentLine) => {
 
 const isFiddleOnly = (line) => line.startsWith('<!-- fiddle.only ')
 const isFiddleSkip = (line) => line.startsWith('<!-- fiddle.skip ')
-const isFiddleExport = (line) => line.startsWith('<!-- fiddle.export ')
+const isFiddleExport = (line) =>
+  line.startsWith('<!-- fiddle.export ')
 
 const isFiddleMarkup = (s) => s && s.startsWith('<!-- fiddle-markup')
 
@@ -79,7 +84,9 @@ function extractFiddles(md) {
   let startLine
   do {
     debug('start with %d', start)
-    start = lines.findIndex((line, k) => k >= start && isFiddleStartLine(line))
+    start = lines.findIndex(
+      (line, k) => k >= start && isFiddleStartLine(line),
+    )
     if (start === -1) {
       break
     }
@@ -117,28 +124,47 @@ function extractFiddles(md) {
   // list of fiddles converted into JavaScript
   const testFiddles = []
 
-  const isHtmlCodeBlock = (n) => n.type === 'CodeBlock' && n.lang === 'html'
+  const shouldIncludeBlock = (block) => {
+    if (!block.meta) {
+      return true
+    }
+    return !block.meta.includes('skip')
+  }
+
+  const isHtmlCodeBlock = (n) =>
+    n.type === 'CodeBlock' && n.lang === 'html'
   const isLiveHtml = (n) => n.type === 'Html'
   const isJavaScript = (n) =>
-    n.type === 'CodeBlock' && (n.lang === 'js' || n.lang === 'javascript')
+    n.type === 'CodeBlock' &&
+    (n.lang === 'js' || n.lang === 'javascript')
 
   fiddles.forEach((fiddle) => {
     const ast = parse(fiddle.fiddle)
     // console.log('markdown fiddle AST')
     // console.log(ast)
-    const htmlCodeBlockMaybe = ast.children.find((s) => isHtmlCodeBlock(s))
-    const htmlLiveBlockMaybe = ast.children.find(
-      (s) => isLiveHtml(s) && !isFiddleMarkup(s.value),
+    const htmlCodeBlockMaybe = ast.children.find(
+      (s) => isHtmlCodeBlock(s) && shouldIncludeBlock(s),
     )
-    const htmlMarkup = ast.children.find((s) => isFiddleMarkup(s.value))
+    const htmlLiveBlockMaybe = ast.children.find(
+      (s) =>
+        isLiveHtml(s) &&
+        !isFiddleMarkup(s.value) &&
+        shouldIncludeBlock(s),
+    )
+    const htmlMarkup = ast.children.find((s) =>
+      isFiddleMarkup(s.value),
+    )
 
     // console.log('found html block?', htmlMaybe)
 
     // a single fiddle can have multiple JS blocks
     // we want to find them all and merge into a single test
-    const jsMaybe = ast.children.filter(isJavaScript)
+    const jsMaybe = ast.children
+      .filter(isJavaScript)
+      .filter(shouldIncludeBlock)
 
     if (jsMaybe.length) {
+      // console.log(jsMaybe)
       const testCode = jsMaybe.map((b) => b.value).join('\n')
 
       const htmlNode = htmlLiveBlockMaybe || htmlCodeBlockMaybe
