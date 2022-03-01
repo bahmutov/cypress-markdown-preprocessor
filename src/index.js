@@ -6,13 +6,15 @@ const tempWrite = require('temp-write')
 const chokidar = require('chokidar')
 const cyBrowserify = require('@cypress/browserify-preprocessor')()
 const debug = require('debug')('cypress-markdown-preprocessor')
-const verbose = require('debug')('cypress-markdown-preprocessor:verbose')
+const verbose = require('debug')(
+  'cypress-markdown-preprocessor:verbose',
+)
 const mdUtils = require('./markdown-utils')
 
 // when a temporary file is written, it is placed outside the current folder
-// thus finding the "@cypress/fiddle" module using the regular Node module resolution
+// thus finding the "@bahmutov/cypress-fiddle" module using the regular Node module resolution
 // is impossible. Just resolve the path once and require it directly later.
-const fiddleModulePath = require.resolve('@cypress/fiddle')
+const fiddleModulePath = require.resolve('@bahmutov/cypress-fiddle')
 
 // bundled[filename] => promise
 const bundled = {}
