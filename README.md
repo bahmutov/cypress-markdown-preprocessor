@@ -83,6 +83,17 @@ You can skip JS blocks in the fiddle by using `js skip` syntax
     ```
 ````
 
+## Exporting JS specs from Markdown fiddles
+
+```shell
+# saves path/to/md.js file
+npx export-fiddle <path/to/md>
+# adds optional "beforeEach" hook with cy.visit(url)
+npx export-fiddle <path/to/md> --before-each <url>
+# adds optional "before" hook with cy.visit(url)
+npx export-fiddle <path/to/md> --before <url>
+```
+
 ## Examples
 
 See the presentation [Using End-to-end Tests as Documentation](https://slides.com/bahmutov/tests-are-docs)

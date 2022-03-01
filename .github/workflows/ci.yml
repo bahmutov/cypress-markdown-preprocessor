@@ -19,6 +19,12 @@ jobs:
         with:
           command: npm t
 
+      - name: Test exporting Markdown to JavaScript 🖨
+        run: |
+          node ./bin/export-fiddles cypress/integration/skip.md
+          cat cypress/integration/skip.js
+          # TODO: confirm the exported JavaScript file
+
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
         with:

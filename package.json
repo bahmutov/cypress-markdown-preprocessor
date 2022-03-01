@@ -4,8 +4,12 @@
   "description": "Use Markdown files as Cypress specs",
   "main": "src/index.js",
   "files": [
-    "src"
+    "src",
+    "bin"
   ],
+  "bin": {
+    "export-fiddles": "bin/export-fiddles.js"
+  },
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
