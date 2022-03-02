@@ -1,5 +1,6 @@
 {
   "fixturesFolder": false,
-  "testFiles": "*.md",
-  "viewportWidth": 500
+  "viewportWidth": 500,
+  "testFiles": ["*.md", "*.js"],
+  "ignoreTestFiles": ["skip.js"]
 }
