@@ -24,22 +24,48 @@ describe('extractFiddles', () => {
         console.log(match)
       }
     } while (match)
-    // const matches = text.match(regex)
-    // console.log(matches)
-    // for (let match in matches) {
-    //   console.log(match)
-    // }
   })
 
   it('detects fiddle start comments', () => {
     const regex = /<!--\s+fiddle\s+/g
     let match
+    let matchCount = 0
+    let fiddles = []
     do {
       match = regex.exec(fiddleCommentMarkdown)
       if (match) {
-        console.log(match)
+        // console.log(match)
+        matchCount += 1
+
+        // remove the start of the comment
+        const start = fiddleCommentMarkdown.indexOf(
+          'fiddle',
+          match.index,
+        )
+
+        // find the end of the HTML comment
+        const endComment = '-->'
+        const endCommentIndex = fiddleCommentMarkdown.indexOf(
+          endComment,
+          start,
+        )
+        const fiddleComment = fiddleCommentMarkdown
+          .substring(
+            start + 6, // where the word "fiddle" was found + 6 characters
+            endCommentIndex,
+          )
+          .trim()
+        // console.log(fiddleComment)
+        fiddles.push(fiddleComment)
       }
     } while (match)
+    expect(matchCount).to.equal(4)
+    expect(fiddles).to.deep.equal([
+      'First',
+      'title: The test',
+      'title: Another test',
+      'title: End comment uses dot',
+    ])
   })
 
   it('finds a fiddle', () => {
