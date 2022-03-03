@@ -5,7 +5,7 @@
 <!-- fiddle First -->
 
 ```js
-expect(true).to.be.true
+console.log('1')
 ```
 
 <!-- fiddle-end -->
@@ -20,7 +20,7 @@ The special fiddle comments might be multiline
 -->
 
 ```js
-console.log(this.currentTest)
+console.log('2')
 ```
 
 <!-- fiddle-end -->
@@ -33,7 +33,7 @@ console.log(this.currentTest)
 -->
 
 ```js
-console.log(this.currentTest)
+console.log('3')
 ```
 
 The end comment can be multiline too
@@ -50,7 +50,7 @@ fiddle-end
 -->
 
 ```js
-console.log(this.currentTest)
+console.log('4')
 ```
 
 The end comment uses `fiddle.end`

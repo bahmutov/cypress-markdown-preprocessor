@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+const { stripIndent } = require('common-tags')
 import { extractFiddles } from '../../src/markdown-utils'
 
 chai.config.truncateThreshold = 1000
@@ -31,6 +32,7 @@ describe('extractFiddles', () => {
     let match
     let matchCount = 0
     let fiddles = []
+    let fiddleComments = []
     do {
       match = regex.exec(fiddleCommentMarkdown)
       if (match) {
@@ -55,17 +57,60 @@ describe('extractFiddles', () => {
             endCommentIndex,
           )
           .trim()
-        // console.log(fiddleComment)
-        fiddles.push(fiddleComment)
+
+        // find the end of the fiddle
+        const afterStartComment = fiddleCommentMarkdown
+          .slice(endCommentIndex)
+          .replace('-->', '')
+        const endFiddleRegex = /<!--\s+fiddle[-.]end\s+-->/
+        const endMatch = endFiddleRegex.exec(afterStartComment)
+        if (endMatch) {
+          const fiddleBody = afterStartComment
+            .slice(0, endMatch.index)
+            .trim()
+          fiddleComments.push(fiddleComment)
+          fiddles.push(fiddleBody)
+        }
       }
     } while (match)
     expect(matchCount).to.equal(4)
-    expect(fiddles).to.deep.equal([
+    expect(fiddleComments, 'fiddle opening comments').to.deep.equal([
       'First',
       'title: The test',
       'title: Another test',
       'title: End comment uses dot',
     ])
+    expect(fiddles, 'number of fiddles').to.have.length(4)
+    const expectedFiddles = [
+      stripIndent`
+        \`\`\`js
+        console.log('1')
+        \`\`\`
+      `,
+      stripIndent`
+        \`\`\`js
+        console.log('2')
+        \`\`\`
+      `,
+      stripIndent`
+        \`\`\`js
+        console.log('3')
+        \`\`\`
+
+        The end comment can be multiline too
+      `,
+      stripIndent`
+        \`\`\`js
+        console.log('4')
+        \`\`\`
+
+        The end comment uses \`fiddle.end\`
+      `,
+    ]
+    console.log(fiddles)
+    fiddles.forEach((fiddle, k) => {
+      expect(fiddle, `fiddle ${k}`).to.equal(expectedFiddles[k])
+    })
   })
 
   it('finds a fiddle', () => {
@@ -74,7 +119,7 @@ describe('extractFiddles', () => {
       'Fiddle comment': [
         {
           name: 'First',
-          test: 'expect(true).to.be.true',
+          test: "console.log('1')",
           html: null,
           commonHtml: null,
           only: false,
