@@ -1,20 +1,30 @@
 /// <reference types="cypress" />
 
 const { stripIndent } = require('common-tags')
-import { extractFiddles } from '../../src/markdown-utils'
+import {
+  extractFiddles,
+  extractFiddles2,
+} from '../../src/markdown-utils'
 
 chai.config.truncateThreshold = 1000
 
-describe('extractFiddles', () => {
-  /** @type {string} */
-  let fiddleCommentMarkdown
+/** @type {string} */
+let fiddleCommentMarkdown
 
-  before(() => {
-    cy.readFile('cypress/integration/fiddle-comment.md').then(
-      (md) => (fiddleCommentMarkdown = md),
-    )
+before(() => {
+  cy.readFile('cypress/integration/fiddle-comment.md').then(
+    (md) => (fiddleCommentMarkdown = md),
+  )
+})
+
+describe('extractFiddles2', () => {
+  it('finds fiddles', () => {
+    const fiddles = extractFiddles2(fiddleCommentMarkdown)
+    expect(fiddles).to.have.length(4)
   })
+})
 
+describe('extractFiddles', () => {
   it('grabs all matches in a string', () => {
     const regex = /a/g
     const text = 'start a middle a end'

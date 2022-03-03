@@ -66,6 +66,93 @@ function formFiddleObject(options) {
   }
 }
 
+function extractFiddles2(fiddleCommentMarkdown) {
+  const fiddles = []
+
+  const regex = /<!--\s+fiddle\s+/g
+  let match
+  do {
+    match = regex.exec(fiddleCommentMarkdown)
+    if (match) {
+      // remove the start of the comment
+      const start = fiddleCommentMarkdown.indexOf(
+        'fiddle',
+        match.index,
+      )
+
+      // find the end of the HTML comment
+      const endComment = '-->'
+      const endCommentIndex = fiddleCommentMarkdown.indexOf(
+        endComment,
+        start,
+      )
+      const fiddleComment = fiddleCommentMarkdown
+        .substring(
+          start + 6, // where the word "fiddle" was found + 6 characters
+          endCommentIndex,
+        )
+        .trim()
+
+      // find the end of the fiddle
+      const afterStartComment = fiddleCommentMarkdown
+        .slice(endCommentIndex)
+        .replace('-->', '')
+      const endFiddleRegex = /<!--\s+fiddle[-.]end\s+-->/
+      const endMatch = endFiddleRegex.exec(afterStartComment)
+      if (endMatch) {
+        const fiddleBody = afterStartComment
+          .slice(0, endMatch.index)
+          .trim()
+
+        fiddles.push({
+          meta: fiddleComment,
+          fiddle: fiddleBody,
+        })
+      }
+    }
+  } while (match)
+
+  return fiddles
+}
+
+/**
+ * Extracts the test parameters from the fiddle beginning HTML comment.
+ * @param {string} meta The fiddle HTML comment text
+ */
+function getTestParameters(meta) {
+  if (typeof meta !== 'string') {
+    throw new Error(
+      'getTestParameters() expects a string as the first argument',
+    )
+  }
+  meta = meta.trim()
+  if (!meta) {
+    throw new Error('getTestParameters() expects a non-empty string')
+  }
+
+  function isMultiline(text) {
+    return text.includes('\n')
+  }
+  function getTestName(line) {
+    if (/^\s*title\s*:/i.test(line)) {
+      return line.replace(/^\s*title\s*:/i, '').trim()
+    }
+  }
+
+  let name = meta
+  if (isMultiline(meta)) {
+  } else {
+    name = getTestName(meta) || meta
+  }
+
+  return {
+    name,
+    only: false,
+    skip: false,
+    export: false,
+  }
+}
+
 function extractFiddles(md) {
   const lines = md.split('\n')
   const fiddles = []
@@ -237,4 +324,8 @@ function extractFiddles(md) {
 
 module.exports = {
   extractFiddles,
+  extractFiddles2,
+  utils: {
+    getTestParameters,
+  },
 }
