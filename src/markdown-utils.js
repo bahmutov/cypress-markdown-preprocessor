@@ -73,7 +73,7 @@ function formFiddleObject(options) {
 function extractFiddles2(fiddleCommentMarkdown) {
   const fiddles = []
 
-  const regex = /<!--\s+fiddle\s+/g
+  const regex = /<!--\s*fiddle\s+/g
   let match
   do {
     match = regex.exec(fiddleCommentMarkdown)
@@ -101,17 +101,20 @@ function extractFiddles2(fiddleCommentMarkdown) {
       const afterStartComment = fiddleCommentMarkdown
         .slice(endCommentIndex)
         .replace('-->', '')
-      const endFiddleRegex = /<!--\s+fiddle[-.]end\s+-->/
+      const endFiddleRegex = /<!--\s*fiddle[-.]end\s*-->/
       const endMatch = endFiddleRegex.exec(afterStartComment)
       if (endMatch) {
         const fiddleBody = afterStartComment
           .slice(0, endMatch.index)
           .trim()
 
-        fiddles.push({
+        const newFiddle = {
           meta: fiddleComment,
-          fiddle: fiddleBody,
-        })
+        }
+        if (fiddleBody) {
+          newFiddle.fiddle = fiddleBody
+        }
+        fiddles.push(newFiddle)
       }
     }
   } while (match)
