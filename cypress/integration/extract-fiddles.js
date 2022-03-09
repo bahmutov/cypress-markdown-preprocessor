@@ -79,7 +79,7 @@ describe('extractFiddles', () => {
       'First',
       'title: The test',
       'title: Another test',
-      'title: End comment uses dot',
+      'title: End comment uses dot\n  skip: true',
     ])
     expect(fiddles, 'number of fiddles').to.have.length(4)
     const expectedFiddles = [
