@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/bahmutov/cypress-markdown-preprocessor#readme",
   "dependencies": {
-    "@cypress/browserify-preprocessor": "3.0.2",
     "@bahmutov/cypress-fiddle": "2.1.0",
+    "@cypress/browserify-preprocessor": "3.0.2",
     "@textlint/markdown-to-ast": "12.1.1",
     "chokidar": "3.5.3",
     "common-tags": "1.8.0",
@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@types/node": "14.14.14",
+    "cy-spok": "^1.5.2",
     "cypress": "9.5.1",
     "cypress-expect": "2.5.1",
     "cypress-should-really": "1.5.0",

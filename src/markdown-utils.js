@@ -5,6 +5,10 @@ const verbose = require('debug')(
   'cypress-markdown-preprocessor:verbose',
 )
 
+function stripQuotes(s) {
+  return s.replace(/^['"]|['"]$/g, '')
+}
+
 /**
  * Finds optional fiddle name from the comment line
  * `<!-- fiddle my name -->` returns "my name".
@@ -162,6 +166,8 @@ function getTestParameters(meta) {
   } else {
     name = getTestName(meta) || meta
   }
+
+  name = stripQuotes(name)
 
   return {
     name,
@@ -345,5 +351,6 @@ module.exports = {
   extractFiddles2,
   utils: {
     getTestParameters,
+    stripQuotes,
   },
 }

@@ -2,7 +2,7 @@
 
 ## Single line
 
-<!-- fiddle First -->
+<!-- fiddle "First" -->
 
 ```js
 console.log('1')
