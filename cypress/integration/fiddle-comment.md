@@ -47,6 +47,7 @@ fiddle-end
 <!--
   fiddle
   title: End comment uses dot
+  skip: true
 -->
 
 ```js

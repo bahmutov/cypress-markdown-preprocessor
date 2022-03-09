@@ -1,10 +1,8 @@
+// @ts-check
 /// <reference types="cypress" />
 
 const { stripIndent } = require('common-tags')
-import {
-  extractFiddles,
-  extractFiddles2,
-} from '../../src/markdown-utils'
+import { extractFiddles } from '../../src/markdown-utils'
 
 chai.config.truncateThreshold = 1000
 
@@ -15,13 +13,6 @@ before(() => {
   cy.readFile('cypress/integration/fiddle-comment.md').then(
     (md) => (fiddleCommentMarkdown = md),
   )
-})
-
-describe('extractFiddles2', () => {
-  it('finds fiddles', () => {
-    const fiddles = extractFiddles2(fiddleCommentMarkdown)
-    expect(fiddles).to.have.length(4)
-  })
 })
 
 describe('extractFiddles', () => {

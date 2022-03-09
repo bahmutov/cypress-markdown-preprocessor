@@ -140,16 +140,34 @@ function getTestParameters(meta) {
   }
 
   let name = meta
+  let skip = false
+  let only = false
+  let exportFiddle = false
   if (isMultiline(meta)) {
+    const lines = meta
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean)
+    lines.forEach((line) => {
+      if (line.match(/title:/)) {
+        name = line.split('title:')[1].trim()
+      } else if (line.match(/skip:/)) {
+        skip = line.split('skip:')[1].trim() === 'true'
+      } else if (line.match(/only:/)) {
+        only = line.split('only:')[1].trim() === 'true'
+      } else if (line.match(/export:/)) {
+        exportFiddle = line.split('export:')[1].trim() === 'true'
+      }
+    })
   } else {
     name = getTestName(meta) || meta
   }
 
   return {
     name,
-    only: false,
-    skip: false,
-    export: false,
+    only,
+    skip,
+    export: exportFiddle,
   }
 }
 

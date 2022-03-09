@@ -33,4 +33,35 @@ describe('getTestParameters', () => {
       export: false,
     })
   })
+
+  it('grabs the skip flag', () => {
+    const meta = stripIndent`
+      fiddle
+      title: End comment uses dot
+      skip: true
+    `
+    const info = getTestParameters(meta)
+    expect(info).to.deep.equal({
+      name: 'End comment uses dot',
+      only: false,
+      skip: true,
+      export: false,
+    })
+  })
+
+  it('grabs the skip and only flags', () => {
+    const meta = stripIndent`
+      fiddle
+      title: End comment uses dot
+      only: true
+      skip: true
+    `
+    const info = getTestParameters(meta)
+    expect(info).to.deep.equal({
+      name: 'End comment uses dot',
+      only: true,
+      skip: true,
+      export: false,
+    })
+  })
 })
