@@ -64,4 +64,17 @@ describe('getTestParameters', () => {
       export: false,
     })
   })
+
+  it('handles no title', () => {
+    const meta = stripIndent`
+      only: true
+      skip: true
+    `
+    const info = getTestParameters(meta)
+    expect(info).to.deep.equal({
+      only: true,
+      skip: true,
+      export: false,
+    })
+  })
 })

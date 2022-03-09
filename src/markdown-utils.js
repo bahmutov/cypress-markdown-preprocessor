@@ -131,7 +131,11 @@ function getTestParameters(meta) {
   }
   meta = meta.trim()
   if (!meta) {
-    throw new Error('getTestParameters() expects a non-empty string')
+    return {
+      only: false,
+      skip: false,
+      export: false,
+    }
   }
 
   function isMultiline(text) {
@@ -143,38 +147,43 @@ function getTestParameters(meta) {
     }
   }
 
-  let name = meta
+  let name
   let skip = false
   let only = false
   let exportFiddle = false
-  if (isMultiline(meta)) {
-    const lines = meta
-      .split('\n')
-      .map((line) => line.trim())
-      .filter(Boolean)
-    lines.forEach((line) => {
-      if (line.match(/title:/)) {
-        name = line.split('title:')[1].trim()
-      } else if (line.match(/skip:/)) {
-        skip = line.split('skip:')[1].trim() === 'true'
-      } else if (line.match(/only:/)) {
-        only = line.split('only:')[1].trim() === 'true'
-      } else if (line.match(/export:/)) {
-        exportFiddle = line.split('export:')[1].trim() === 'true'
-      }
-    })
-  } else {
-    name = getTestName(meta) || meta
+
+  const lines = meta
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+  lines.forEach((line) => {
+    if (line.match(/title:/)) {
+      name = line.split('title:')[1].trim()
+    } else if (line.match(/skip:/)) {
+      skip = line.split('skip:')[1].trim() === 'true'
+    } else if (line.match(/only:/)) {
+      only = line.split('only:')[1].trim() === 'true'
+    } else if (line.match(/export:/)) {
+      exportFiddle = line.split('export:')[1].trim() === 'true'
+    } else {
+      // probably the fiddle name
+      name = line.trim()
+    }
+  })
+
+  if (name) {
+    name = stripQuotes(name)
   }
 
-  name = stripQuotes(name)
-
-  return {
-    name,
+  const info = {
     only,
     skip,
     export: exportFiddle,
   }
+  if (name) {
+    info.name = name
+  }
+  return info
 }
 
 function extractFiddles(md) {

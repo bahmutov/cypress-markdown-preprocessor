@@ -76,7 +76,7 @@ describe('extractFiddles', () => {
     } while (match)
     expect(matchCount).to.equal(4)
     expect(fiddleComments, 'fiddle opening comments').to.deep.equal([
-      'First',
+      '"First"',
       'title: The test',
       'title: Another test',
       'title: End comment uses dot\n  skip: true',
@@ -119,7 +119,7 @@ describe('extractFiddles', () => {
     expect(fiddles).to.deep.equal({
       'Fiddle comment': [
         {
-          name: 'First',
+          name: '"First"',
           test: "console.log('1')",
           html: null,
           commonHtml: null,
