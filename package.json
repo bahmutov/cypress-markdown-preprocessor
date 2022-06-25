@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/bahmutov/cypress-markdown-preprocessor#readme",
   "dependencies": {
-    "@bahmutov/cypress-fiddle": "2.1.0",
+    "@bahmutov/cypress-fiddle": "2.2.0",
     "@cypress/browserify-preprocessor": "3.0.2",
     "@textlint/markdown-to-ast": "12.1.1",
     "chokidar": "3.5.3",
