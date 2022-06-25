@@ -1,4 +1,4 @@
-# cypress-markdown-preprocessor ![@bahmutov/cypress-fiddle version](https://img.shields.io/badge/@bahmutov/cypress--fiddle-2.1.0-brightgreen)
+# cypress-markdown-preprocessor ![@bahmutov/cypress-fiddle version](https://img.shields.io/badge/@bahmutov/cypress--fiddle-2.2.0-brightgreen)
 
 [![ci status][ci image]][ci url] [![badges status][badges image]][badges url] [![renovate-app badge][renovate-badge]][renovate-app] ![cypress version](https://img.shields.io/badge/cypress-9.7.0-brightgreen)
 
