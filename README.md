@@ -52,7 +52,7 @@ The "html" block is optional.
 
 ![Example test](images/example.png)
 
-Note: after extracting the tests, this preprocessor sets [@cypress/fiddle](https://github.com/cypress-io/cypress-fiddle) to run them.
+Note: after extracting the tests, this preprocessor sets [@bahmutov/cypress-fiddle](https://github.com/bahmutov/cypress-fiddle) to run them.
 
 ### Suites
 
