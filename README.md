@@ -71,6 +71,29 @@ You can include multiple JS blocks in each fiddle
 
     <!-- fiddle.end -->
 
+### Multiple HTML blocks
+
+You can include multiple HTML blocks in each fiddle
+
+    <!-- fiddle Multiple HTML code blocks -->
+
+    ```html
+    <div id="greeting">Hello</div>
+    ```
+
+    Another HTML code block
+
+    ```html
+    <div id="name">World</div>
+    ```
+
+    ```js
+    cy.get('div#greeting').should('have.text', 'Hello')
+    cy.get('div#name').should('have.text', 'World')
+    ```
+
+    <!-- fiddle-end -->
+
 ### Suites
 
 To create suites of tests, use `/` to separate the suite name from the test name. Tests with the same suite name are grouped together automatically.

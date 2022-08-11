@@ -265,9 +265,18 @@ function extractFiddles(md) {
     const ast = parse(fiddle.fiddle)
     // console.log('markdown fiddle AST')
     // console.log(ast)
-    const htmlCodeBlockMaybe = ast.children.find(
-      (s) => isHtmlCodeBlock(s) && shouldIncludeBlock(s),
-    )
+
+    const htmlMaybe = ast.children
+      .filter(isHtmlCodeBlock)
+      .filter(shouldIncludeBlock)
+      .map((htmlCodeBlock) => {
+        return {
+          source: htmlCodeBlock.value,
+          hide: false,
+        }
+      })
+    // console.log(htmlMaybe)
+
     const htmlLiveBlockMaybe = ast.children.find(
       (s) =>
         isLiveHtml(s) &&
@@ -290,7 +299,6 @@ function extractFiddles(md) {
       // console.log(jsMaybe)
       const testCode = jsMaybe.map((b) => b.value).join('\n')
 
-      const htmlNode = htmlLiveBlockMaybe || htmlCodeBlockMaybe
       const commonHtml = htmlMarkup
         ? extractFiddleMarkup(htmlMarkup.value)
         : null
@@ -298,7 +306,9 @@ function extractFiddles(md) {
       const testFiddle = formFiddleObject({
         name: fiddle.name,
         test: testCode,
-        html: htmlNode ? htmlNode.value : null,
+        html: htmlLiveBlockMaybe
+          ? htmlLiveBlockMaybe.value
+          : htmlMaybe,
         commonHtml,
         only: fiddle.only,
         skip: fiddle.skip,

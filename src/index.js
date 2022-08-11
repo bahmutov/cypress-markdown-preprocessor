@@ -30,10 +30,10 @@ const bundleMdFile = (filePath, outputPath) => {
   }
 
   const specSource = source`
-      const { testExamples } = require('${fiddleModulePath}');
-      const fiddles = ${createTestsText};
-      testExamples(fiddles);
-    `
+    const { testExamples } = require('${fiddleModulePath}');
+    const fiddles = ${createTestsText};
+    testExamples(fiddles);
+  `
   const writtenTempFilename = tempWrite.sync(
     specSource,
     path.basename(filePath) + '.js',
