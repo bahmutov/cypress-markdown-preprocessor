@@ -270,9 +270,10 @@ function extractFiddles(md) {
       .filter(isHtmlCodeBlock)
       .filter(shouldIncludeBlock)
       .map((htmlCodeBlock) => {
+        const meta = htmlCodeBlock.meta || ''
         return {
           source: htmlCodeBlock.value,
-          hide: false,
+          hide: meta.includes('hide'),
         }
       })
     // console.log(htmlMaybe)

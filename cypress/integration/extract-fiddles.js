@@ -8,10 +8,16 @@ chai.config.truncateThreshold = 1000
 
 /** @type {string} */
 let fiddleCommentMarkdown
+/** @type {string} */
+let fiddleHtmlBlocksMarkdown
 
 before(() => {
   cy.readFile('cypress/integration/fiddle-comment.md').then(
     (md) => (fiddleCommentMarkdown = md),
+  )
+
+  cy.readFile('cypress/integration/multiple-html-blocks.md').then(
+    (md) => (fiddleHtmlBlocksMarkdown = md),
   )
 })
 
@@ -128,6 +134,57 @@ describe('extractFiddles', () => {
           export: false,
         },
       ],
+    })
+  })
+
+  it('extracts html blocks', () => {
+    const fiddles = extractFiddles(fiddleHtmlBlocksMarkdown)
+    expect(fiddles)
+      .to.have.property('Multiple HTML code blocks')
+      .and.to.be.an('array')
+      .and.to.have.length(2)
+    const [fiddle1, fiddle2] = fiddles['Multiple HTML code blocks']
+    expect(fiddle1, 'first fiddle').to.deep.equal({
+      name: 'Multiple HTML code blocks',
+      test: stripIndent`
+        cy.get('div#greeting').should('have.text', 'Hello')
+        cy.get('div#name').should('have.text', 'World')
+      `,
+      html: [
+        {
+          source: '<div id="greeting">Hello</div>',
+          hide: false,
+        },
+        {
+          source: '<div id="name">World</div>',
+          hide: false,
+        },
+      ],
+      commonHtml: null,
+      only: false,
+      skip: false,
+      export: false,
+    })
+    expect(fiddle2, 'second fiddle').to.deep.equal({
+      name: 'Hide an HTML code block',
+      test: stripIndent`
+        cy.get('div#greeting').should('have.text', 'Hello')
+        cy.get('div#name').should('have.text', 'World')
+      `,
+      html: [
+        {
+          source: '<div id="greeting">Hello</div>',
+          hide: false,
+        },
+        {
+          source: '<div id="name">World</div>',
+          hide: true,
+        },
+      ],
+      commonHtml: null,
+      only: false,
+      skip: false,
+      export: false,
     })
   })
 })

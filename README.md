@@ -94,6 +94,22 @@ You can include multiple HTML blocks in each fiddle
 
     <!-- fiddle-end -->
 
+### Hide HTML code block
+
+You can hide the HTML code block from the source view, yet still have it part of the live app by adding "hide" meta after the `html`
+
+    <!-- fiddle Hide HTML code block -->
+
+    ```html hide
+    <div id="greeting">Hello</div>
+    ```
+
+    ```js
+    cy.get('div#greeting').should('have.text', 'Hello')
+    ```
+
+    <!-- fiddle-end -->
+
 ### Suites
 
 To create suites of tests, use `/` to separate the suite name from the test name. Tests with the same suite name are grouped together automatically.
