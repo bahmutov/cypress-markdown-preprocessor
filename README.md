@@ -54,6 +54,46 @@ The "html" block is optional.
 
 Note: after extracting the tests, this preprocessor sets [@bahmutov/cypress-fiddle](https://github.com/bahmutov/cypress-fiddle) to run them.
 
+### Multiple JavaScript blocks
+
+You can include multiple JS blocks in each fiddle
+
+    <!-- fiddle Example -->
+    ```js
+    cy.contains('#hello', 'Hello')
+    ```
+
+    Some time later more test code
+
+    ```js
+    cy.wait(2000)
+    ```
+
+    <!-- fiddle.end -->
+
+### Multiple HTML blocks
+
+You can include multiple HTML blocks in each fiddle
+
+    <!-- fiddle Multiple HTML code blocks -->
+
+    ```html
+    <div id="greeting">Hello</div>
+    ```
+
+    Another HTML code block
+
+    ```html
+    <div id="name">World</div>
+    ```
+
+    ```js
+    cy.get('div#greeting').should('have.text', 'Hello')
+    cy.get('div#name').should('have.text', 'World')
+    ```
+
+    <!-- fiddle-end -->
+
 ### Suites
 
 To create suites of tests, use `/` to separate the suite name from the test name. Tests with the same suite name are grouped together automatically.
