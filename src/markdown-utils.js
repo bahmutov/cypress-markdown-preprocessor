@@ -308,7 +308,9 @@ function extractFiddles(md) {
         test: testCode,
         html: htmlLiveBlockMaybe
           ? htmlLiveBlockMaybe.value
-          : htmlMaybe,
+          : htmlMaybe.length
+          ? htmlMaybe
+          : null,
         commonHtml,
         only: fiddle.only,
         skip: fiddle.skip,
