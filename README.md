@@ -110,6 +110,28 @@ You can hide the HTML code block from the source view, yet still have it part of
 
     <!-- fiddle-end -->
 
+### CSS block
+
+You can add CSS to be applied to the HTML application. The CSS block is not shown on the output page.
+
+    <!-- fiddle CSS Code block -->
+    ```html
+    <div id="greeting">Hello</div>
+    ```
+    ```css
+    #greeting {
+    color: #f0f;
+    padding: 1rem;
+    font-weight: bold;
+    }
+    ```
+    ```js
+    cy.get('div#greeting')
+    .should('have.text', 'Hello')
+    .and('have.css', 'color', 'rgb(255, 0, 255)')
+    ```
+    <!-- fiddle-end -->
+
 ### Suites
 
 To create suites of tests, use `/` to separate the suite name from the test name. Tests with the same suite name are grouped together automatically.
