@@ -260,11 +260,20 @@ function extractFiddles(md) {
   const isJavaScript = (n) =>
     n.type === 'CodeBlock' &&
     (n.lang === 'js' || n.lang === 'javascript')
+  const isCssCodeBlock = (n) =>
+    n.type === 'CodeBlock' && n.lang === 'css'
 
   fiddles.forEach((fiddle) => {
     const ast = parse(fiddle.fiddle)
     // console.log('markdown fiddle AST')
     // console.log(ast)
+
+    const cssMaybe = ast.children
+      .filter(isCssCodeBlock)
+      .filter(shouldIncludeBlock)
+      .map((codeBlock) => codeBlock.value)
+      .join('\n')
+    // console.log(cssMaybe)
 
     const htmlMaybe = ast.children
       .filter(isHtmlCodeBlock)
@@ -313,6 +322,7 @@ function extractFiddles(md) {
           ? htmlMaybe
           : null,
         commonHtml,
+        css: cssMaybe || null,
         only: fiddle.only,
         skip: fiddle.skip,
         export: fiddle.export,
