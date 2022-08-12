@@ -4,12 +4,14 @@
 const { stripIndent } = require('common-tags')
 import { extractFiddles } from '../../src/markdown-utils'
 
-chai.config.truncateThreshold = 1000
+chai.config.truncateThreshold = 1500
 
 /** @type {string} */
 let fiddleCommentMarkdown
 /** @type {string} */
 let fiddleHtmlBlocksMarkdown
+/** @type {string} */
+let fiddleHideHtmlBlocksMarkdown
 
 before(() => {
   cy.readFile('cypress/integration/fiddle-comment.md').then(
@@ -18,6 +20,10 @@ before(() => {
 
   cy.readFile('cypress/integration/multiple-html-blocks.md').then(
     (md) => (fiddleHtmlBlocksMarkdown = md),
+  )
+
+  cy.readFile('cypress/integration/hide-html.md').then(
+    (md) => (fiddleHideHtmlBlocksMarkdown = md),
   )
 })
 
@@ -180,6 +186,26 @@ describe('extractFiddles', () => {
         },
         {
           source: '<div id="name">World</div>',
+          hide: true,
+        },
+      ],
+      commonHtml: null,
+      css: null,
+      only: false,
+      skip: false,
+      export: false,
+    })
+  })
+
+  it('hides html block', () => {
+    const fiddles = extractFiddles(fiddleHideHtmlBlocksMarkdown)
+    const fiddle = fiddles['Hide HTML block'][0]
+    expect(fiddle).to.deep.equal({
+      name: 'HTML source not shown',
+      test: "cy.get('div#greeting').should('have.text', 'Hello')",
+      html: [
+        {
+          source: '<div id="greeting">Hello</div>',
           hide: true,
         },
       ],
