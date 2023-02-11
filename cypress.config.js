@@ -2,7 +2,7 @@ const { defineConfig } = require('cypress')
 
 // in the user project it would be
 // const mdPreprocessor = require('cypress-markdown-preprocessor')
-const mdPreprocessor = require('../..')
+const mdPreprocessor = require('.')
 
 module.exports = defineConfig({
   fixturesFolder: false,
