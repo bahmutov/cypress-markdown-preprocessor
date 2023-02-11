@@ -21,8 +21,8 @@ jobs:
 
       - name: Test exporting Markdown to JavaScript 🖨
         run: |
-          node ./bin/export-fiddles cypress/integration/skip.md
-          cat cypress/integration/skip.js
+          node ./bin/export-fiddles cypress/e2e/skip.md
+          cat cypress/e2e/skip.js
           # TODO: confirm the exported JavaScript file
 
       - name: Semantic Release 🚀
