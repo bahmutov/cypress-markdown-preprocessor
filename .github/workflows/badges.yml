@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Update version badges 🏷
-        run: npx -p dependency-version-badge update-badge cypress @bahmutov/cypress-fiddle
+        run: npm run badges
 
       - name: Commit any changed files 💾
         uses: stefanzweifel/git-auto-commit-action@v4

@@ -14,7 +14,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test": "cypress-expect run --min-passing 2",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "badges": "npx -p dependency-version-badge update-badge cypress @bahmutov/cypress-fiddle"
   },
   "repository": {
     "type": "git",
