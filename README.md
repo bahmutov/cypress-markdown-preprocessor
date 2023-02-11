@@ -16,7 +16,28 @@ npm i -D cypress-markdown-preprocessor
 yarn add -D cypress-markdown-preprocessor
 ```
 
-Add to your Cypress plugins file
+### Configure the plugin
+
+If you are using Cypress v10+, add to your Cypress plugins file
+
+```js
+// cypress.config.js
+const { defineConfig } = require('cypress')
+const mdPreprocessor = require('cypress-markdown-preprocessor')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('file:preprocessor', mdPreprocessor)
+      return config
+    },
+    // use Markdown file from folder "docs" as tests
+    specPattern: 'docs/**/*.md',
+  },
+})
+```
+
+If you are using Cypress before version 10, add the following to your plugins file:
 
 ```js
 // cypress/plugins/index.js
@@ -26,7 +47,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Set the [`testFiles`](https://on.cypress.io/configuration) to use Markdown files as specs
+And set the [`testFiles`](https://on.cypress.io/configuration) in file `cypress.json` to use Markdown files as specs
 
 ```json
 {
