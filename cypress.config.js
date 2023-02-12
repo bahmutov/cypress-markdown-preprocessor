@@ -1,4 +1,6 @@
 const { defineConfig } = require('cypress')
+// https://github.com/bahmutov/cypress-split
+const cypressSplit = require('cypress-split')
 
 // in the user project it would be
 // const mdPreprocessor = require('cypress-markdown-preprocessor')
@@ -11,6 +13,7 @@ module.exports = defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
+      cypressSplit(on, config)
       on('file:preprocessor', mdPreprocessor)
       return config
     },

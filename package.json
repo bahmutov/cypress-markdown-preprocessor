@@ -47,6 +47,7 @@
     "cypress": "12.5.1",
     "cypress-expect": "2.5.3",
     "cypress-should-really": "1.6.3",
+    "cypress-split": "^1.2.0",
     "prettier": "2.2.1",
     "semantic-release": "19.0.5"
   }
