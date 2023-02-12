@@ -4,6 +4,7 @@ const debug = require('debug')('cypress-markdown-preprocessor')
 const verbose = require('debug')(
   'cypress-markdown-preprocessor:verbose',
 )
+verbose.enabled = true
 
 function stripQuotes(s) {
   return s.replace(/^['"]|['"]$/g, '')
@@ -304,10 +305,21 @@ function extractFiddles(md) {
     const jsMaybe = ast.children
       .filter(isJavaScript)
       .filter(shouldIncludeBlock)
+      .map((codeBlock) => {
+        const meta = codeBlock.meta || ''
+        return {
+          source: codeBlock.value,
+          hide: meta.includes('hide'),
+        }
+      })
 
     if (jsMaybe.length) {
       // console.log(jsMaybe)
-      const testCode = jsMaybe.map((b) => b.value).join('\n')
+      const testCode = jsMaybe.map((b) => b.source).join('\n')
+      const testCodeShow = jsMaybe
+        .filter((b) => !b.hide)
+        .map((b) => b.source)
+        .join('\n')
 
       const commonHtml = htmlMarkup
         ? extractFiddleMarkup(htmlMarkup.value)
@@ -316,6 +328,7 @@ function extractFiddles(md) {
       const testFiddle = formFiddleObject({
         name: fiddle.name,
         test: testCode,
+        testShown: testCodeShow || null,
         html: htmlLiveBlockMaybe
           ? htmlLiveBlockMaybe.value
           : htmlMaybe.length
