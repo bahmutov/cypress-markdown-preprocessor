@@ -4,7 +4,6 @@ const debug = require('debug')('cypress-markdown-preprocessor')
 const verbose = require('debug')(
   'cypress-markdown-preprocessor:verbose',
 )
-verbose.enabled = true
 
 function stripQuotes(s) {
   return s.replace(/^['"]|['"]$/g, '')
