@@ -2,28 +2,18 @@ name: ci
 on: push
 jobs:
   test:
+    # https://github.com/bahmutov/cypress-workflows
+    uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v1
+    with:
+      n: 3
+      command: npm test
+
+  release:
+    needs: 'test'
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v3
-
-      # Node > 16
-      # npm > 8
-      - name: Print Node version 🖨
-        run: |
-          node -v
-          npm -v
-
-      - name: Run tests 🧪
-        uses: cypress-io/github-action@v5
-        with:
-          command: npm t
-
-      - name: Test exporting Markdown to JavaScript 🖨
-        run: |
-          node ./bin/export-fiddles cypress/e2e/skip.md
-          cat cypress/e2e/skip.js
-          # TODO: confirm the exported JavaScript file
 
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v3
