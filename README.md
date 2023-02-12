@@ -131,6 +131,28 @@ You can hide the HTML code block from the source view, yet still have it part of
 
     <!-- fiddle-end -->
 
+### Hide JavaScript code block
+
+You can run but hide parts of the JavaScript code
+
+    <!-- fiddle Hide the first JS block -->
+
+    ```html
+    <div id="greeting">Hello</div>
+    ```
+
+    ```js hide
+    // the test code will run but not shown to the user
+    cy.log('this block is hidden')
+    ```
+
+    ```js
+    // this code will be shown to the user
+    cy.get('div#greeting').should('have.text', 'Hello')
+    ```
+
+    <!-- fiddle-end -->
+
 ### CSS block
 
 You can add CSS to be applied to the HTML application. The CSS block is not shown on the output page.
