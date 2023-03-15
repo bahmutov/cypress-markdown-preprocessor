@@ -44,7 +44,7 @@
   "devDependencies": {
     "@types/node": "14.14.14",
     "cy-spok": "^1.5.2",
-    "cypress": "12.7.0",
+    "cypress": "12.8.0",
     "cypress-expect": "3.1.0",
     "cypress-should-really": "1.6.3",
     "cypress-split": "^1.2.0",
