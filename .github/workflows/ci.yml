@@ -8,8 +8,19 @@ jobs:
       n: 3
       command: npm test
 
+  test-collect:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bahmutov/npm-install@v1
+      - name: Print fiddles 🖨️
+        run: node bin/collect-utils -p cypress/e2e/many-fiddles.md
+    env:
+      # we do not need to install Cypress to run this test
+      CYPRESS_INSTALL_BINARY: 0
+
   release:
-    needs: 'test'
+    needs: ['test', 'test-collect']
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout 🛎
