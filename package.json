@@ -38,7 +38,8 @@
     "@textlint/markdown-to-ast": "13.3.2",
     "chokidar": "3.5.3",
     "common-tags": "1.8.0",
-    "debug": "4.3.1",
+    "debug": "4.3.4",
+    "globby": "^11.1.0",
     "temp-write": "4.0.0"
   },
   "devDependencies": {
