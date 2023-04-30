@@ -2,10 +2,10 @@
 // @ts-check
 
 const debug = require('debug')('cypress-markdown-preprocessor')
-const mdUtils = require('../src/markdown-utils')
 const fs = require('fs')
 const arg = require('arg')
 const globby = require('globby')
+const { collectFiddles } = require('../src/collect-utils')
 
 const args = arg(
   {
@@ -35,46 +35,8 @@ console.log(
   sourceFiles.length,
 )
 
-const fiddles = []
-sourceFiles.forEach((markdownFilename, k) => {
-  const stats = fs.statSync(markdownFilename)
-  const md = fs.readFileSync(markdownFilename, 'utf8')
-  const treeOfTests = mdUtils.extractFiddles(md)
-  // debug(treeOfTests)
+const fiddles = collectFiddles(sourceFiles)
 
-  let startNumber = fiddles.length
-  const collectTests = (tests, parentTitle) => {
-    if (tests.name) {
-      // already a test object
-      const fullTitle = parentTitle
-        ? parentTitle + ' ' + tests.name
-        : tests.name
-      fiddles.push({
-        title: fullTitle,
-        filename: markdownFilename,
-        created: stats.birthtime,
-        modified: stats.mtime,
-      })
-      return
-    }
-
-    if (Array.isArray(tests)) {
-      tests.forEach((test) => {
-        collectTests(test, parentTitle)
-      })
-    } else {
-      Object.keys(tests).forEach((key) => {
-        const fullTitle = parentTitle ? parentTitle + ' ' + key : key
-        const t = tests[key]
-        collectTests(t, fullTitle)
-      })
-    }
-  }
-
-  collectTests(treeOfTests)
-  const n = fiddles.length - startNumber
-  debug('found %d fiddles in %s', n, markdownFilename)
-})
 console.log(
   'found %d fiddle(s) across %d Markdown file(s)',
   fiddles.length,
