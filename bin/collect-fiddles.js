@@ -5,7 +5,7 @@ const debug = require('debug')('cypress-markdown-preprocessor')
 const fs = require('fs')
 const arg = require('arg')
 const globby = require('globby')
-const { collectFiddles } = require('../src/collect-utils')
+const { collectFiddlesIn } = require('../src/collect-utils')
 
 const args = arg(
   {
@@ -21,26 +21,11 @@ debug('arguments %o', args)
 
 // remove "node" and the script name from the list of arguments
 const markdownPattern = args._.slice(2)
-const sourceFiles = globby.sync(markdownPattern)
-debug('source files')
-debug(sourceFiles)
-
-if (!sourceFiles.length) {
-  console.error('Could not find any Markdown files')
-  process.exit(1)
-}
+const fiddles = collectFiddlesIn(markdownPattern)
 
 console.log(
-  'Searching for fiddles in %d Markdown file(s)',
-  sourceFiles.length,
-)
-
-const fiddles = collectFiddles(sourceFiles)
-
-console.log(
-  'found %d fiddle(s) across %d Markdown file(s)',
+  'found %d fiddle(s) across Markdown file(s)',
   fiddles.length,
-  sourceFiles.length,
 )
 
 if (args['--print']) {

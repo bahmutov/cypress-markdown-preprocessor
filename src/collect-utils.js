@@ -1,6 +1,7 @@
 const debug = require('debug')('cypress-markdown-preprocessor')
 const mdUtils = require('../src/markdown-utils')
 const fs = require('fs')
+const globby = require('globby')
 
 function collectFiddles(sourceFiles) {
   const fiddles = []
@@ -48,4 +49,25 @@ function collectFiddles(sourceFiles) {
   return fiddles
 }
 
-module.exports = { collectFiddles }
+/**
+ * Finds all fiddles in the given wildcard or list of files
+ * @param {string|string[]} markdownFilePattern
+ */
+function collectFiddlesIn(markdownFilePattern) {
+  const sourceFiles = globby.sync(markdownFilePattern)
+  debug('source files')
+  debug(sourceFiles)
+
+  if (!sourceFiles.length) {
+    throw new Error('Could not find any Markdown files')
+  }
+
+  console.log(
+    'Searching for fiddles in %d Markdown file(s)',
+    sourceFiles.length,
+  )
+
+  return collectFiddles(sourceFiles)
+}
+
+module.exports = { collectFiddles, collectFiddlesIn }
