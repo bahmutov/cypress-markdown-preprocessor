@@ -8,7 +8,8 @@
     "bin"
   ],
   "bin": {
-    "export-fiddles": "bin/export-fiddles.js"
+    "export-fiddles": "bin/export-fiddles.js",
+    "collect-fiddles": "bin/collect-fiddles.js"
   },
   "scripts": {
     "cy:open": "cypress open",
