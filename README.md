@@ -215,6 +215,19 @@ npx export-fiddle <path/to/md> --before-each <url>
 npx export-fiddle <path/to/md> --before <url>
 ```
 
+## Find fiddles
+
+You can find fiddles in Markdown files using a blog pattern
+
+```
+# find fiddles in file A.md
+$ npx collect-fiddles cypress/e2e/A.md
+# print found fiddles in two files
+$ npx collect-fiddles --print cypress/e2e/A.md cypress/e2e/B.md
+# save found fiddles into a JSON file
+$ npx collect-fiddles --filename out.json 'cypress/e2e/**/*.md'
+```
+
 ## Examples
 
 See the presentation [Using End-to-end Tests as Documentation](https://slides.com/bahmutov/tests-are-docs)
