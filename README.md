@@ -234,6 +234,16 @@ Note: for created timestamp, it gets the Git created date to avoid depending on 
 git log --diff-filter=A --follow --format=%aD -1 -- <filename>
 ```
 
+**Important:** check out all commits to get accurate timestamps. For example, if using [actions/checkout](https://github.com/actions/checkout)
+
+```yml
+- name: Check out source code 🛎
+  uses: actions/checkout@v3
+  with:
+    # check out all commits to get accurate created date
+    fetch-depth: 0
+```
+
 ## Examples
 
 See the presentation [Using End-to-end Tests as Documentation](https://slides.com/bahmutov/tests-are-docs)
