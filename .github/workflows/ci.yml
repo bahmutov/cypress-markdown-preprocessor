@@ -11,7 +11,12 @@ jobs:
   test-collect:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      # https://github.com/actions/checkout
+      - name: Check out source code 🛎
+        uses: actions/checkout@v3
+        with:
+          # check out all commits to get accurate created date
+          fetch-depth: 0
       - uses: bahmutov/npm-install@v1
       - name: Print fiddles 🖨️
         run: npm run demo:collect
