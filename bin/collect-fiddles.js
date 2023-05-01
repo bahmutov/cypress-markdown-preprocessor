@@ -21,19 +21,24 @@ debug('arguments %o', args)
 
 // remove "node" and the script name from the list of arguments
 const markdownPattern = args._.slice(2)
-const fiddles = collectFiddlesIn(markdownPattern)
+collectFiddlesIn(markdownPattern)
+  .then((fiddles) => {
+    console.log(
+      'found %d fiddle(s) across Markdown file(s)',
+      fiddles.length,
+    )
 
-console.log(
-  'found %d fiddle(s) across Markdown file(s)',
-  fiddles.length,
-)
+    if (args['--print']) {
+      console.log(fiddles)
+    }
 
-if (args['--print']) {
-  console.log(fiddles)
-}
-
-if (args['--filename']) {
-  const text = JSON.stringify(fiddles, null, 2) + '\n'
-  fs.writeFileSync(args['--filename'], text)
-  console.log('write fiddles to JSON file %s', args['--filename'])
-}
+    if (args['--filename']) {
+      const text = JSON.stringify(fiddles, null, 2) + '\n'
+      fs.writeFileSync(args['--filename'], text)
+      console.log('write fiddles to JSON file %s', args['--filename'])
+    }
+  })
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
+  })

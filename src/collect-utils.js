@@ -2,11 +2,25 @@ const debug = require('debug')('cypress-markdown-preprocessor')
 const mdUtils = require('../src/markdown-utils')
 const fs = require('fs')
 const globby = require('globby')
+const execa = require('execa')
 
-function collectFiddles(sourceFiles) {
+async function getCreatedDate(filename) {
+  const result = await execa('git', [
+    'log',
+    '--diff-filter=A',
+    '--follow',
+    '--format=%aD',
+    '-1',
+    '--',
+    filename,
+  ])
+  return new Date(result.stdout)
+}
+
+async function collectFiddles(sourceFiles) {
   const fiddles = []
-  sourceFiles.forEach((markdownFilename, k) => {
-    const stats = fs.statSync(markdownFilename)
+  for (const markdownFilename of sourceFiles) {
+    const created = await getCreatedDate(markdownFilename)
     const md = fs.readFileSync(markdownFilename, 'utf8')
     const treeOfTests = mdUtils.extractFiddles(md)
     // debug(treeOfTests)
@@ -21,8 +35,7 @@ function collectFiddles(sourceFiles) {
         fiddles.push({
           title: fullTitle,
           filename: markdownFilename,
-          created: stats.birthtime,
-          modified: stats.mtime,
+          created,
         })
         return
       }
@@ -45,7 +58,8 @@ function collectFiddles(sourceFiles) {
     collectTests(treeOfTests)
     const n = fiddles.length - startNumber
     debug('found %d fiddles in %s', n, markdownFilename)
-  })
+  }
+
   return fiddles
 }
 
@@ -53,7 +67,7 @@ function collectFiddles(sourceFiles) {
  * Finds all fiddles in the given wildcard or list of files
  * @param {string|string[]} markdownFilePattern
  */
-function collectFiddlesIn(markdownFilePattern) {
+async function collectFiddlesIn(markdownFilePattern) {
   const sourceFiles = globby.sync(markdownFilePattern)
   debug('source files')
   debug(sourceFiles)
@@ -67,7 +81,8 @@ function collectFiddlesIn(markdownFilePattern) {
     sourceFiles.length,
   )
 
-  return collectFiddles(sourceFiles)
+  const fiddles = await collectFiddles(sourceFiles)
+  return fiddles
 }
 
 module.exports = { collectFiddles, collectFiddlesIn }

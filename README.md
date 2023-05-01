@@ -228,6 +228,12 @@ $ npx collect-fiddles --print cypress/e2e/A.md cypress/e2e/B.md
 $ npx collect-fiddles --filename out.json 'cypress/e2e/**/*.md'
 ```
 
+Note: for created timestamp, it gets the Git created date to avoid depending on the file write timestamps
+
+```
+git log --diff-filter=A --follow --format=%aD -1 -- <filename>
+```
+
 ## Examples
 
 See the presentation [Using End-to-end Tests as Documentation](https://slides.com/bahmutov/tests-are-docs)
