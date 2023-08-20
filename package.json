@@ -53,6 +53,6 @@
     "cypress-should-really": "1.6.3",
     "cypress-split": "^1.2.0",
     "prettier": "2.2.1",
-    "semantic-release": "21.0.8"
+    "semantic-release": "21.0.9"
   }
 }
