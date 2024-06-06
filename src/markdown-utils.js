@@ -39,6 +39,19 @@ const extractFiddleMarkup = (s) => {
   return s
 }
 
+const isMoreThanAComment = (s) => {
+  if (!s) {
+    return false
+  }
+
+  const trimmed = s.trim()
+  return !(
+    trimmed.startsWith('<!--') &&
+    trimmed.endsWith('-->') &&
+    trimmed.length > 9
+  )
+}
+
 /**
  * Checks if the given line starts with "<!-- fiddle" or one of its variations.
  */
@@ -285,14 +298,19 @@ function extractFiddles(md) {
           hide: meta.includes('hide'),
         }
       })
+    // console.log('html maybe')
     // console.log(htmlMaybe)
 
     const htmlLiveBlockMaybe = ast.children.find(
       (s) =>
+        isMoreThanAComment(s.value) &&
         isLiveHtml(s) &&
         !isFiddleMarkup(s.value) &&
         shouldIncludeBlock(s),
     )
+    // console.log('html live block')
+    // console.log(htmlLiveBlockMaybe)
+
     const htmlMarkup = ast.children.find((s) =>
       isFiddleMarkup(s.value),
     )
