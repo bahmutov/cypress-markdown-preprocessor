@@ -37,7 +37,7 @@
   "dependencies": {
     "@bahmutov/cypress-fiddle": "2.6.1",
     "@cypress/browserify-preprocessor": "3.0.2",
-    "@textlint/markdown-to-ast": "14.0.4",
+    "@textlint/markdown-to-ast": "14.0.5",
     "chokidar": "3.6.0",
     "common-tags": "1.8.0",
     "debug": "4.3.4",
