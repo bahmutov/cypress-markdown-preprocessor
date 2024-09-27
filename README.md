@@ -1,6 +1,6 @@
 # cypress-markdown-preprocessor ![@bahmutov/cypress-fiddle version](https://img.shields.io/badge/@bahmutov/cypress--fiddle-2.6.1-brightgreen)
 
-[![ci status][ci image]][ci url] [![badges status][badges image]][badges url] [![renovate-app badge][renovate-badge]][renovate-app] ![cypress version](https://img.shields.io/badge/cypress-13.14.2-brightgreen)
+[![ci status][ci image]][ci url] [![badges status][badges image]][badges url] [![renovate-app badge][renovate-badge]][renovate-app] ![cypress version](https://img.shields.io/badge/cypress-13.15.0-brightgreen)
 
 > Use Markdown files as Cypress specs
 
