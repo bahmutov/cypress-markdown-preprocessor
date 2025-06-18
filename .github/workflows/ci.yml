@@ -3,17 +3,17 @@ on: push
 jobs:
   test:
     # https://github.com/bahmutov/cypress-workflows
-    uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v1
+    uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
     with:
-      n: 3
+      nE2E: 3
       command: npm test
 
   test-collect:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       # https://github.com/actions/checkout
       - name: Check out source code 🛎
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # check out all commits to get accurate created date
           fetch-depth: 0
@@ -26,13 +26,13 @@ jobs:
 
   release:
     needs: ['test', 'test-collect']
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v3
+        uses: cycjimmy/semantic-release-action@v4
         if: github.ref == 'refs/heads/main'
         with:
           branch: main
