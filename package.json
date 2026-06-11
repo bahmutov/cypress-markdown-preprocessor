@@ -43,7 +43,7 @@
     "debug": "4.3.4",
     "execa": "^5.1.1",
     "globby": "^11.1.0",
-    "temp-write": "4.0.0"
+    "temp-write": "6.0.1"
   },
   "devDependencies": {
     "@types/node": "14.14.14",
