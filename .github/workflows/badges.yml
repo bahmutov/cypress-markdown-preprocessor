@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Update version badges 🏷
         run: npm run badges
 
       - name: Commit any changed files 💾
-        uses: stefanzweifel/git-auto-commit-action@v4
+        # https://github.com/stefanzweifel/git-auto-commit-action
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Updated badges
           branch: main
